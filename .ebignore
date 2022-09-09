@@ -1,0 +1,3 @@
+# If .ebignore isn't present, but .gitignore is, the EB CLI ignores files
+# specified in .gitignore. If .ebignore is present, the EB CLI doesn't read
+# .gitignore. (from the AWS Elastic Beanstalk Developer Guide)
