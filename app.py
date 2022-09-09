@@ -1,4 +1,9 @@
-"""Trending on Twitter networkx Streamlit app."""
+"""Trending on Twitter NetworkX App
+
+This app visualizes connections between entities in Twitter's trending topics
+for Germany, making use of the NetworkX and pyvis libraries. It also accepts
+user input for additional link analysis.
+"""
 
 import os
 from collections import Counter
@@ -10,10 +15,12 @@ import streamlit as st
 from dotenv import load_dotenv
 from pyvis.network import Network
 
+import app_layout  # local module containing layout and text elements
+
 
 @st.experimental_singleton()
 def get_tweepy_api() -> tweepy.api:
-    """Return tweepy API instance."""
+    """Authenticate and return tweepy API instance."""
     load_dotenv()  # Take environment variables from .env file
     BEARER_TOKEN = os.environ.get("BEARER_TOKEN")
     auth = tweepy.OAuth2BearerHandler(BEARER_TOKEN)
@@ -79,38 +86,16 @@ def draw_network_graph(df):
     st.components.v1.html(html_file.read(), height=435)
 
 
-st.title("Twitter's Trending Topics for Germany")
+app_layout.setup_page()
 
 api = get_tweepy_api()
 trends = get_trends_list()
 selected_trends = st.multiselect(
     "Select the Germany trend(s) you are interested in:", trends
 )
-col1, col2, col3 = st.columns([1, 1, 2])
-with col1:
-    entities_type = st.radio(
-        "Show", options=("Hashtags", "User mentions", "Both")
-    )
-with col2:
-    threshold = st.slider("Set threshold", min_value=2, max_value=4)
-with col3:
-    selected_input = st.text_input(
-        "You can also add trends of your own (comma-seperated):"
-    )
-    if selected_input:
-        selected_trends = selected_trends + selected_input.split(",")
-# col1, col2, col3, col4 = st.columns([1,1,1,1])
-#
-# with col1:
-#     show_hashtags = st.checkbox("Show hashtags", value=True)
-# with col2:
-#     show_mentions = st.checkbox("Show user mentions", value=True)
-# with col3:
-#     threshold = st.slider("Set threshold", min_value=2, max_value=4)
-# with col4:
-#     user_input = st.text_input("Your own input")
-#     if user_input:
-#         selected_trends.append(user_input)
+selected_input = st.text_input(
+    "Or try adding trends of your own (as a comma-seperated list):"
+)
 
 df = pd.DataFrame(columns=["source", "target", "type", "value"])
 
