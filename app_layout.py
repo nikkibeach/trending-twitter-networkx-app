@@ -10,8 +10,9 @@ def setup_page() -> None:
     st.markdown(
         """This application lets you visualize networks of connected entities in
         Twitter's trending topics for Germany. The top ten trending topics right
-        now are provided, but can also add quries of your own. The source code
-        is available on [GitHub](https://github.com/nikkibeach/trending-twitter-networkx).
+        now are provided, but you can also add queries of your own. The source code
+        is available on
+        [GitHub](https://github.com/nikkibeach/trending-twitter-networkx-app).
     """
     )
     st.markdown(

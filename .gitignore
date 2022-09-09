@@ -13,3 +13,8 @@ pyvenv.cfg
 # Environment variable #
 ########################
 .env
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

@@ -51,7 +51,7 @@ def add_trend_to_df(trend: str) -> pd.DataFrame:
         for mention in tweet.entities["user_mentions"]:
             mentions.append(mention["name"])
 
-    # Dedupe and count entities
+    # De-duplicate and count entities
     hashtags = Counter(hashtags)
     mentions = Counter(mentions)
 
@@ -74,8 +74,8 @@ def add_trend_to_df(trend: str) -> pd.DataFrame:
     return new_df
 
 
-def draw_network_graph(df):
-    """Draw graph of networkx instance."""
+def draw_network_graph(df: pd.DataFrame) -> None:
+    """Draw graph of NetworkX instance."""
     G = nx.from_pandas_edgelist(df, "source", "target", "value")
     trends_net = Network(
         height="410px", width="100%", bgcolor="#0e1117", font_color="white"
@@ -90,12 +90,15 @@ app_layout.setup_page()
 
 api = get_tweepy_api()
 trends = get_trends_list()
+
 selected_trends = st.multiselect(
     "Select the Germany trend(s) you are interested in:", trends
 )
 selected_input = st.text_input(
-    "Or try adding trends of your own (as a comma-seperated list):"
+    "Or try adding trends of your own (as a comma-separated list):"
 )
+if selected_input:
+    selected_trends += selected_input.split(",")
 
 df = pd.DataFrame(columns=["source", "target", "type", "value"])
 
@@ -104,4 +107,4 @@ for trend in selected_trends:
     df = pd.concat([df, new_df])
 
 if len(selected_trends) > 0:
-    draw_network_graph(df[df.value > 1])
+    draw_network_graph(df[df.value > 1])  #  threshold for min occurrences
