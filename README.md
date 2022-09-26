@@ -6,8 +6,8 @@ any other trends/topics provided as a comma-separated list.
 
 The app was mainly created to get some hands-on experience with the Twitter API
 and network visualization. It was built using Streamlit, Tweepy, NetworkX and
-pyvis, and was(!) deployed with Docker on AWS Elastic Beanstalk. You can deploy
-the application yourself, but you will need to have your own Twitter API
+pyvis, and was(!) deployed with Docker on AWS Elastic Beanstalk. To deploy
+the application yourself, you will need to have your own Twitter API
 credentials, as shown in the `.env.example` file.
 
 ![Demo Animation](assets/demo.gif)
